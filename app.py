@@ -4,21 +4,22 @@ from requests import get
 from bs4 import BeautifulSoup
 from re import match
 from os.path import join, expanduser, exists
-from os import mkdir
+from os import makedirs
 
 default_url = "https://alpha.wallhaven.cc/search?q=&search_image=&categories=100&purity=100&resolutions=1920x1080&sorting=random&order=desc&page={}" 
 
 save_folder = expanduser("~\\Pictures\\Wallpaper")
-if not exists:
+print("Saving images in: {}".format(save_folder))
+if not save_folder:
     print("Creating folder: {}".format(save_folder))
-    mkdir(save_folder)
+    makedirs(save_folder)
 
 
 def extract(url, element, attribute):
     print ("Downloading '{}' ....".format(url))
     html = get(url)
     print("Parsing '{}'....".format(url))
-    bs = BeautifulSoup(html.text)
+    bs = BeautifulSoup(html.text, 'html.parser')
     for el_a in bs.find_all(element):
         if el_a.has_attr(attribute):
             yield el_a[attribute]
