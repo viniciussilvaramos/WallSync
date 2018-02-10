@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from multiprocessing import Pool
 from requests import get
 from bs4 import BeautifulSoup
